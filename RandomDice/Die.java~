@@ -1,0 +1,9 @@
+public class Die
+{
+  int dieRoll = 0;
+  
+  public void roll () {
+    dieRoll = 
+  }
+  
+}
