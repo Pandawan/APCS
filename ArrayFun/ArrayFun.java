@@ -1,3 +1,8 @@
+// Program File: ArrayFun.java
+// 
+// Class Description: This will modify and try out different Array features with Rectangle Objects and Ints
+
+
 import java.util.Random;
 import java.lang.Exception;
 
