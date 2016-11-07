@@ -33,57 +33,51 @@ public class FlexArrayPrimitive {
   
   // Adds an element to the array
   public void append (int data) {
-    insert(size, data);
+    if (size >= array.length) {
+      resize(1);
+    }
+    
+    array[size] = data;
     size++;
   }
   
-  public int discard(int index) {
-    // Check if the array isn't empty (don't want out of bounds)
-    if (!isEmpty()){
-      // Another check for an out of bounds with index
-      if (index < size || index < array.length) {
-        // Set size smaller
-        size--;
-        
-        // Create a new array with the correct values
-        int[] newArr = new int[array.length - 1];
-        
-        // Loop through the old array, and add all values that aren't at the index chosen
-        int j = 0;
-        for (int i = 0; i < size; i++) {
-          if (i != index) {
-            newArr[j] = array[i];
-            j++;
-          }
-        }
-        // Apply changes
-        array = newArr;
-      }
-      else {
-        System.out.println("Trying to discard for an index out of logical or physical bounds.");
-        return -999;
-      }
-    }
-    else {
-      System.out.println("Can't discard array if it's empty");
-      return -999;
-    }
+  public int discard (int index) {
+    // Check if we have problems
+    if (index < 0) throw new ArrayIndexOutOfBoundsException();
+    if (index >= size) return -999;
     
-    // Just one last return in case something goes wrong
-    return -999;
+    int value = array[index];
+    // Loop through everything
+    for (int i = index; i<= size-1; i++) {
+      array[i] = array[i+1];
+    }
+    array[size] = 0;
+    size--;
+    
+    return value;
+    
   }
   
   public void insert (int index, int data) {
-    if (index >= array.length) {
-      resize(1);
-    }
-    // Check if we are getting an index higher than the last element
     if (index > size) {
-      index = size;
+      append(data);
+    }else {
       size++;
+      
+      int[] oldArr = array;
+      
+      // Create a new array with the correct values
+      resize(1);
+      
+      // Loop through the old array, and add all values that aren't at the index chosen
+      for (int i = 0; i < index; i++) {
+        array[i] = oldArr[i];
+      }
+      array[index] = data;
+      for (int i = index + 1; i < size; i++) {
+        array[i] = oldArr[i - 1];
+      }
     }
-    
-    array[index] = data;
   }
   
   // Resizes by j
@@ -100,10 +94,16 @@ public class FlexArrayPrimitive {
   // Returns every value inside the array in one line
   public String toString () {
     String str = "[";
-
-    for (int r : array){
-      str += r + ", ";
+    
+    for (int i = 0; i < size; i++){
+      str += array[i];
+      // If not last item
+      if (i != size - 1) {
+        // Add a ,
+        str += ", ";
+      }
     }
+    
     str += "]";
     return str;
   }

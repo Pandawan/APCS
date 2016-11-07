@@ -33,57 +33,52 @@ public class FlexArrayRectangle {
   
   // Adds an element to the array
   public void append (Rectangle data) {
-    insert(size, data);
+    if (size >= array.length) {
+      resize(1);
+    }
+    
+    array[size] = data;
     size++;
   }
   
-  public Rectangle discard(int index) {
-    // Check if the array isn't empty (don't want out of bounds)
-    if (!isEmpty()){
-      // Another check for an out of bounds with index
-      if (index < size || index < array.length) {
-        // Set size smaller
-        size--;
-        
-        // Create a new array with the correct values
-        Rectangle[] newArr = new Rectangle[array.length - 1];
-        
-        // Loop through the old array, and add all values that aren't at the index chosen
-        int j = 0;
-        for (int i = 0; i < size; i++) {
-          if (i != index) {
-            newArr[j] = array[i];
-            j++;
-          }
-        }
-        // Apply changes
-        array = newArr;
-      }
-      else {
-        System.out.println("Trying to discard for an index out of logical or physical bounds.");
-        return null;
-      }
-    }
-    else {
-      System.out.println("Can't discard array if it's empty");
-      return null;
-    }
+   public Rectangle discard (int index) {
+    // Check if we have problems
+    if (index < 0) throw new ArrayIndexOutOfBoundsException();
+    if (index >= size) return null;
     
-    // Just one last return in case something goes wrong
-    return null;
-  }
+    Rectangle value = array[index];
+    // Loop through everything
+    for (int i = index; i<= size-1; i++) {
+      array[i] = array[i+1];
+    }
+    array[size] = null;
+    size--;
+    
+    return value;
+    
+   }
   
   public void insert (int index, Rectangle data) {
-    if (index >= array.length) {
-      resize(1);
-    }
-    // Check if we are getting an index higher than the last element
     if (index > size) {
-      index = size;
+      append(data);
+    }else {
       size++;
+      
+      // Create a new array with the correct values
+      Rectangle[] newArr = new Rectangle[array.length + 1];
+      
+      // Loop through the old array, and add all values that aren't at the index chosen
+      for (int i = 0; i < index; i++) {
+        newArr[i] = array[i];
+      }
+      newArr[index] = data;
+      for (int i = index + 1; i < size; i++) {
+        newArr[i] = array[i - 1];
+      }
+      // Apply changes
+      array = newArr;
+      
     }
-    
-    array[index] = data;
   }
   
   // Resizes by j
@@ -102,7 +97,7 @@ public class FlexArrayRectangle {
     String str = "[";
 
     for (int i = 0; i < size; i++){
-      str += r;
+      str += array[i];
       // If not last item
       if (i != size - 1) {
         // Add a new line
