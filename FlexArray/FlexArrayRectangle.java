@@ -115,7 +115,7 @@ public class FlexArrayRectangle {
       // If not last item
       if (i != size - 1) {
         // Add a ,
-        str += ", ";
+        str += "\r\n";
       }
     }
     
