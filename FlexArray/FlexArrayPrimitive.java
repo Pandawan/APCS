@@ -3,7 +3,7 @@
  * 
  * Program File: FlexArrayPrimitive.java
  * 
- * Description: Creates a flexible array (basically a List) of INTs. It can dynamically change size, add and remove values.
+ * Description: Creates a flexible array (basically a List) of Integers. It can dynamically change size, add and remove values.
  */
 
 public class FlexArrayPrimitive {
@@ -34,7 +34,7 @@ public class FlexArrayPrimitive {
   // Adds an element to the array
   public void append (int data) {
     if (size >= array.length) {
-      resize(1);
+      resize();
     }
     
     array[size] = data;
@@ -42,9 +42,16 @@ public class FlexArrayPrimitive {
   }
   
   public int discard (int index) {
-    // Check if we have problems
-    if (index < 0) throw new ArrayIndexOutOfBoundsException();
-    if (index >= size) return -999;
+    // Check for errors
+    if (index < 0){
+        System.out.println("DISCARD: Index cannot be smaller than 0!");
+        return -999;
+      }
+    // Check for errors
+    if (index >= size) {
+      System.out.println("DISCARD: Cannot discard outside of logical size!");
+      return -999;
+    }
     
     int value = array[index];
     // Loop through everything
@@ -53,21 +60,29 @@ public class FlexArrayPrimitive {
     }
     array[size] = 0;
     size--;
-    
+    // Return the value of the discarded index
     return value;
     
   }
   
   public void insert (int index, int data) {
-    if (index > size) {
+    // Append if we have the index bigger (or equal because less processing needed) than 1
+    if (index >= size) {
       append(data);
     }else {
-      size++;
+      // Check for errors
+      if (index < 0){
+        System.out.println("INSERT: Index cannot be smaller than 0!");
+        return;
+      }
       
+      // Increase the logical size
+      size++;
+      // Copy the old array to keep the data
       int[] oldArr = array;
       
       // Create a new array with the correct values
-      resize(1);
+      resize();
       
       // Loop through the old array, and add all values that aren't at the index chosen
       for (int i = 0; i < index; i++) {
@@ -80,9 +95,9 @@ public class FlexArrayPrimitive {
     }
   }
   
-  // Resizes by j
-  private void resize (int j) {
-    int[] newArr = new int[array.length + j];
+  // Resizes by 1
+  private void resize () {
+    int[] newArr = new int[array.length + 1];
     
     for (int i = 0; i < array.length; i++) {
       newArr[i] = array[i];

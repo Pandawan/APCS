@@ -34,17 +34,24 @@ public class FlexArrayRectangle {
   // Adds an element to the array
   public void append (Rectangle data) {
     if (size >= array.length) {
-      resize(1);
+      resize();
     }
     
     array[size] = data;
     size++;
   }
   
-   public Rectangle discard (int index) {
-    // Check if we have problems
-    if (index < 0) throw new ArrayIndexOutOfBoundsException();
-    if (index >= size) return null;
+  public Rectangle discard (int index) {
+    // Check for errors
+    if (index < 0){
+        System.out.println("DISCARD: Index cannot be smaller than 0!");
+        return null;
+      }
+    // Check for errors
+    if (index >= size) {
+      System.out.println("DISCARD: Cannot discard outside of logical size!");
+      return null;
+    }
     
     Rectangle value = array[index];
     // Loop through everything
@@ -53,37 +60,44 @@ public class FlexArrayRectangle {
     }
     array[size] = null;
     size--;
-    
+    // Return the value of the discarded index
     return value;
     
-   }
+  }
   
   public void insert (int index, Rectangle data) {
-    if (index > size) {
+    // Append if we have the index bigger (or equal because less processing needed) than 1
+    if (index >= size) {
       append(data);
     }else {
+      // Check for errors
+      if (index < 0){
+        System.out.println("INSERT: Index cannot be smaller than 0!");
+        return;
+      }
+      
+      // Increase the logical size
       size++;
+      // Copy the old array to keep the data
+      Rectangle[] oldArr = array;
       
       // Create a new array with the correct values
-      Rectangle[] newArr = new Rectangle[array.length + 1];
+      resize();
       
       // Loop through the old array, and add all values that aren't at the index chosen
       for (int i = 0; i < index; i++) {
-        newArr[i] = array[i];
+        array[i] = oldArr[i];
       }
-      newArr[index] = data;
+      array[index] = data;
       for (int i = index + 1; i < size; i++) {
-        newArr[i] = array[i - 1];
+        array[i] = oldArr[i - 1];
       }
-      // Apply changes
-      array = newArr;
-      
     }
   }
   
-  // Resizes by j
-  private void resize (int j) {
-    Rectangle[] newArr = new Rectangle[array.length + j];
+  // Resizes by 1
+  private void resize () {
+    Rectangle[] newArr = new Rectangle[array.length + 1];
     
     for (int i = 0; i < array.length; i++) {
       newArr[i] = array[i];
@@ -95,15 +109,16 @@ public class FlexArrayRectangle {
   // Returns every value inside the array in one line
   public String toString () {
     String str = "[";
-
+    
     for (int i = 0; i < size; i++){
       str += array[i];
       // If not last item
       if (i != size - 1) {
-        // Add a new line
-        str += "\r\n";
+        // Add a ,
+        str += ", ";
       }
     }
+    
     str += "]";
     return str;
   }
