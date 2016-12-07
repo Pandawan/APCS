@@ -327,17 +327,7 @@ public class Picture extends SimplePicture
     this.copy(flowey, 330, 430, 267, 367);
     
     this.mirrorVertical();
-    
-    //this.copy(flower1,0,0);
-    //this.copy(flower2,100,0);
-    //this.copy(flower1,200,0);
-    //Picture flowerNoBlue = new Picture(flower2);
-    //flowerNoBlue.zeroBlue();
-    //this.copy(flowerNoBlue,300,0);
-    //this.copy(flower1,400,0);
-    //this.copy(flower2,500,0);
-    //this.mirrorVertical();
-    //this.write("collage.jpg");
+    this.write("collage.jpg");
   }
   
   
