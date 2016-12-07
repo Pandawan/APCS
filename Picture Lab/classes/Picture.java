@@ -239,10 +239,114 @@ public class Picture extends SimplePicture
     } 
   }
   
+  public void mirrorArms()
+  {
+    int mirrorPoint = 204;
+    Pixel leftPixel = null;
+    Pixel rightPixel = null;
+    int count = 0;
+    Pixel[][] pixels = this.getPixels2D();
+    
+    // loop through the rows
+    for (int row = 160; row < 200; row++)
+    {
+      // loop from 13 to just before the mirror point
+      for (int col = 100; col < 170; col++)
+      {
+        
+        leftPixel = pixels[row][col];      
+        rightPixel = pixels[row][mirrorPoint - col + mirrorPoint];
+        rightPixel.setColor(leftPixel.getColor());
+      }
+    }
+  }
+  
+  public void mirrorGull()
+  {
+    int mirrorPoint = 350;
+    Pixel leftPixel = null;
+    Pixel rightPixel = null;
+    int count = 0;
+    Pixel[][] pixels = this.getPixels2D();
+    
+    // loop through the rows
+    for (int row = 236; row < 327; row++)
+    {
+      // loop from 13 to just before the mirror point
+      for (int col = 236; col < 345; col++)
+      {
+        leftPixel = pixels[row][col];      
+        rightPixel = pixels[row][mirrorPoint - col + mirrorPoint];
+        rightPixel.setColor(leftPixel.getColor());
+      }
+    }
+  }
+  
+  public void copy(Picture fromPic, int startRow, int endRow, int startCol, int endCol)
+  {
+    Pixel fromPixel = null;
+    Pixel toPixel = null;
+    Pixel[][] toPixels = this.getPixels2D();
+    Pixel[][] fromPixels = fromPic.getPixels2D();
+    for (int fromRow = 0, toRow = startRow; 
+         fromRow < fromPixels.length &&
+         toRow < endRow; 
+         fromRow++, toRow++)
+    {
+      for (int fromCol = 0, toCol = startCol; 
+           fromCol < fromPixels[0].length &&
+           toCol < endCol;  
+           fromCol++, toCol++)
+      {
+        fromPixel = fromPixels[fromRow][fromCol];
+        toPixel = toPixels[toRow][toCol];
+        toPixel.setColor(fromPixel.getColor());
+      }
+    }   
+  }
+  
+  public void myCollage()
+  {
+    Picture flower1 = new Picture("flower1.jpg");
+    Picture flower2 = new Picture("flower2.jpg");
+    Picture caterpillar = new Picture("caterpillar.jpg");
+    Picture flower2Normal = new Picture("flower2.jpg");
+    Picture barbara = new Picture("barbaraS.jpg");
+    Picture flowey = new Picture("flowey.png");
+    
+    flower1.keepOnlyBlue();
+    flower2.grayscale();
+    caterpillar.negate();
+    barbara.negate();
+    
+    this.copy(caterpillar, 0, 150, 0, 329);
+    this.copy(flower1, 175, 275, 25, 125);
+    this.copy(flower2, 350, 450, 15, 115);
+    this.copy(flower2Normal, 275, 375, 50, 150);
+    this.copy(barbara, 175, 322, 166, 313);
+    this.copy(flowey, 330, 430, 267, 367);
+    
+    this.mirrorVertical();
+    
+    //this.copy(flower1,0,0);
+    //this.copy(flower2,100,0);
+    //this.copy(flower1,200,0);
+    //Picture flowerNoBlue = new Picture(flower2);
+    //flowerNoBlue.zeroBlue();
+    //this.copy(flowerNoBlue,300,0);
+    //this.copy(flower1,400,0);
+    //this.copy(flower2,500,0);
+    //this.mirrorVertical();
+    //this.write("collage.jpg");
+  }
+  
+  
+  //// FROM ORIGINAL DOC ////
+  
   /** Mirror just part of a picture of a temple */
   public void mirrorTemple()
   {
-    int mirrorPoint = 276;
+    int mirrorPoint = 170;
     Pixel leftPixel = null;
     Pixel rightPixel = null;
     int count = 0;
@@ -254,13 +358,15 @@ public class Picture extends SimplePicture
       // loop from 13 to just before the mirror point
       for (int col = 13; col < mirrorPoint; col++)
       {
-        
+        count++;
         leftPixel = pixels[row][col];      
         rightPixel = pixels[row]                       
                          [mirrorPoint - col + mirrorPoint];
         rightPixel.setColor(leftPixel.getColor());
       }
     }
+    
+    System.out.println(count);
   }
   
   /** copy from the passed fromPic to the
