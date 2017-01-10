@@ -144,6 +144,12 @@ public class PictureTester
     swan.explore();
   }
   
+  public static void testChromaKey () {
+  	Picture me = new Picture("me.jpg");
+  	me.chromakey(new Picture("mario2.png"));
+  	me.explore();
+  }
+  
   /** Main method for testing.  Every class can have a main
     * method in Java */
   public static void main(String[] args)
@@ -169,10 +175,10 @@ public class PictureTester
     //testMirrorDiagonal();
     //testCollage();
     //testCopy();
-    testMyCollage();
+    //testMyCollage();
     //testEdgeDetection();
     //testEdgeDetection2();
-    //testChromakey();
+    testChromaKey();
     //testEncodeAndDecode();
     //testGetCountRedOverValue(250);
     //testSetRedToHalfValueInTopHalf();
