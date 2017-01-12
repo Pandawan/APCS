@@ -245,7 +245,7 @@ public class Picture extends SimplePicture
     Pixel topPixel = null;
     Pixel bottomPixel = null;
     Pixel[][] pixels = this.getPixels2D();
-
+    
     // Left arm
     for (int row = 158; row < mirrorPoint; row++)
     {
@@ -345,21 +345,64 @@ public class Picture extends SimplePicture
   }
   
   public void chromakey (Picture back) {
-  	int green1 = 100;
-  	int green2 = 200;
-  	Pixel[][] pix = getPixels2D();
-  	Pixel[][] backPix = back.getPixels2D();
-  	for (int x = 0; x < pix.length; x++){
-  		for (int y = 0; y < pix[x].length; y++){
-  			int currentGreen = pix[x][y].getGreen();
-  			if (currentGreen > green1 && currentGreen < green2){
-  				if (pix[x][y].getRed() < currentGreen && pix[x][y].getBlue() < currentGreen){
-  					pix[x][y].setColor(backPix[x][y].getColor());
-  				}
-  			}
-  		}
-  	}
-  	
+    int green1 = 100;
+    int green2 = 200;
+    int green1Bot = 60;
+    Pixel[][] pix = getPixels2D();
+    Pixel[][] backPix = back.getPixels2D();
+    for (int x = 0; x < pix.length; x++){
+      for (int y = 0; y < pix[x].length; y++){
+        int currentGreen = pix[x][y].getGreen();
+        if (x < 630){
+          if (currentGreen > green1 && currentGreen < green2){
+            if (pix[x][y].getRed() < currentGreen && pix[x][y].getBlue() < currentGreen){
+              pix[x][y].setColor(backPix[x][y].getColor());
+            }
+          }
+        }else {
+          if (currentGreen > green1Bot && currentGreen < green2){
+            if (pix[x][y].getRed() < currentGreen && pix[x][y].getBlue() < currentGreen){
+              pix[x][y].setColor(backPix[x][y].getColor());
+            }
+          }
+        }
+      }
+    }
+    
+  }
+  
+  public void encode (Picture messagePic) {
+    Pixel[][] pixes = getPixels2D();
+    Pixel[][] messagePix = messagePic.getPixels2D();
+    for (int x = 0; x < pixes.length; x++){
+      for (int y = 0; y < pixes[x].length; y++){
+        Pixel pix = pixes[x][y];
+        if (pix.getRed() % 2 != 0){
+          if (pix.getRed() == 0)
+            pix.setRed(pix.getRed() + 1);
+          else
+            pix.setRed(pix.getRed() - 1);
+        }
+        
+        if (messagePix[x][y].getRed() < 220){
+          pix.setRed(pix.getRed() + 1);
+        }
+      }
+    }
+  }
+  
+  public void decode () {
+    Pixel[][] pixes = getPixels2D();
+    for (int x = 0; x < pixes.length; x++){
+      for (int y = 0; y < pixes[x].length; y++){
+        Pixel pix = pixes[x][y];
+        if (pix.getRed() % 2 != 0){
+          pix.setColor(Color.BLACK);
+        }else{
+          pix.setColor(Color.WHITE);
+        }
+      }
+    }
   }
   
   
@@ -383,7 +426,7 @@ public class Picture extends SimplePicture
         count++;
         leftPixel = pixels[row][col];      
         rightPixel = pixels[row]                       
-                         [mirrorPoint - col + mirrorPoint];
+          [mirrorPoint - col + mirrorPoint];
         rightPixel.setColor(leftPixel.getColor());
       }
     }
@@ -399,7 +442,7 @@ public class Picture extends SimplePicture
     * @param startCol the start col to copy to
     */
   public void copy(Picture fromPic, 
-                 int startRow, int startCol)
+                   int startRow, int startCol)
   {
     Pixel fromPixel = null;
     Pixel toPixel = null;
@@ -421,7 +464,7 @@ public class Picture extends SimplePicture
       }
     }   
   }
-
+  
   /** Method to create a collage of several pictures */
   public void createCollage()
   {

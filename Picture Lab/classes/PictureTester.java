@@ -109,6 +109,14 @@ public class PictureTester
     canvas.explore();
   }
   
+  public static void testEncodeAndDecode() {
+    Picture pic = new Picture("blue-mark.jpg");
+    pic.encode(new Picture("msg.jpg"));
+    pic.explore();
+    pic.decode();
+    pic.explore();
+  }
+  
   
   /** Method to test mirrorVertical */
   public static void testMirrorVertical()
@@ -145,9 +153,9 @@ public class PictureTester
   }
   
   public static void testChromaKey () {
-  	Picture me = new Picture("me.jpg");
-  	me.chromakey(new Picture("mario2.png"));
-  	me.explore();
+   Picture me = new Picture("me.jpg");
+   me.chromakey(new Picture("mario2.png"));
+   me.explore();
   }
   
   /** Main method for testing.  Every class can have a main
@@ -169,8 +177,8 @@ public class PictureTester
     //testMirrorHoriqzontal();
     //testMirrorHorizontalBotToTop();
     //testMirrorDiagonal();
-    testMirrorTemple();
-    testMirrorArms();
+    //testMirrorTemple();
+    //testMirrorArms();
     //testMirrorGull();
     //testMirrorDiagonal();
     //testCollage();
@@ -178,8 +186,8 @@ public class PictureTester
     //testMyCollage();
     //testEdgeDetection();
     //testEdgeDetection2();
-    testChromaKey();
-    //testEncodeAndDecode();
+    //testChromaKey();
+    testEncodeAndDecode();
     //testGetCountRedOverValue(250);
     //testSetRedToHalfValueInTopHalf();
     //testClearBlueOverValue(200);
