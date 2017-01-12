@@ -52,27 +52,31 @@ public class TwoDArray {
     for(int col = 0; col < grid.length; col++){
       for (int row = 0; row < grid[col].length; row++){
         copy[col][row] = grid[col][row];
+      }
+    }
+    
+    for(int col = 0; col < grid.length; col++){
+      for (int row = 0; row < grid[col].length; row++){
         grid[col][row] = 0;
         
         if (col > 0 && row > 0)
           if (copy[col - 1][row - 1] == 0)
           grid[col][row]++;
         
-        if (col < grid.length - 1 && row > 0)
+        if (col < NUM - 1 && row > 0)
           if (copy[col + 1][row - 1] == 0)
           grid[col][row]++;
         
-        if (col > 0 && row < grid[col].length - 1)
+        if (col > 0 && row < NUM - 1)
           if (copy[col - 1][row + 1] == 0)
           grid[col][row]++;
         
-        if (col < grid.length - 1 && row < grid[col].length - 1)
+        if (col < NUM - 1 && row < NUM - 1)
           if (copy[col + 1][row + 1] == 0)
           grid[col][row]++;
         
       }
     }
-    grid = copy;
   }
 }
 
