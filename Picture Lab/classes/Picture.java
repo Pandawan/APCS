@@ -344,6 +344,24 @@ public class Picture extends SimplePicture
     this.write("collage.jpg");
   }
   
+  public void chromakey (Picture back) {
+  	int green1 = 100;
+  	int green2 = 200;
+  	Pixel[][] pix = getPixels2D();
+  	Pixel[][] backPix = back.getPixels2D();
+  	for (int x = 0; x < pix.length; x++){
+  		for (int y = 0; y < pix[x].length; y++){
+  			int currentGreen = pix[x][y].getGreen();
+  			if (currentGreen > green1 && currentGreen < green2){
+  				if (pix[x][y].getRed() < currentGreen && pix[x][y].getBlue() < currentGreen){
+  					pix[x][y].setColor(backPix[x][y].getColor());
+  				}
+  			}
+  		}
+  	}
+  	
+  }
+  
   
   //// FROM ORIGINAL DOC ////
   
