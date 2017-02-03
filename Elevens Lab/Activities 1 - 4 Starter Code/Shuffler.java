@@ -10,12 +10,12 @@ public class Shuffler {
    * The number of consecutive shuffle steps to be performed in each call
    * to each sorting procedure.
    */
-  private static final int SHUFFLE_COUNT = 1;
+  private static final int SHUFFLE_COUNT = 8;
   
   /**
    * The number of values to shuffle.
    */
-  private static final int VALUE_COUNT = 52;
+  private static final int VALUE_COUNT = 15;
   
   /**
    * Tests shuffling methods.
@@ -54,9 +54,11 @@ public class Shuffler {
     }
     System.out.println();
     
-    System.out.println(flip());
+    System.out.println("Flipping a coin: " + flip());
     
-    System.out.println(arePermutations(new int[] {0, 1, 2}, new int[] {2, 1, 0, 5}));
+    System.out.println("Are {0, 1, 2} and {2, 1, 0, 5} permutations: " + arePermutations(new int[] {0, 1, 2}, new int[] {2, 1, 0, 5}));
+    
+    System.out.println("Are {0, 1, 2} and {2, 1, 0} permutations: " + arePermutations(new int[] {0, 1, 2}, new int[] {2, 1, 0}));
   }
   
   
@@ -119,7 +121,6 @@ public class Shuffler {
   
   public static boolean arePermutations (int[] arr1, int[] arr2) {
     if (arr1.length != arr2.length){
-      System.out.println("NOOOOOOO! Y U DO DIS!");
       return false;
     }
     
