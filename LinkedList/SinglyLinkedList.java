@@ -7,7 +7,7 @@ import java.util.*;
  * @created    April 27, 2002
  * 
  * Modified: 
- * Miguel Tenant de La Tour
+ * Miguel
  * March 6, 2017
  */
 public class SinglyLinkedList

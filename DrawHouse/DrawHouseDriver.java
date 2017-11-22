@@ -1,5 +1,5 @@
 // 
-// Name: Miguel Tenant de La Tour
+// Name: Miguel
 //
 // Program File: DrawHouseDriver.java
 //
